@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Insighta Labs+</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav>
+        <a class="logo" href="dashboard.html">Insighta Labs+</a>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="profiles.html">Profiles</a>
+            <a href="search.html">Search</a>
+            <a href="account.html">Account</a>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="page">
+        <h2>Dashboard</h2>
+        <div class="cards" id="metrics">
+            <div class="loading">Loading metrics...</div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        getTokensFromURL();
+        requireLogin();
+
+        async function loadDashboard() {
+            const res = await apiCall("/api/profiles?limit=1");
+            if (!res) return;
+            const data = await res.json();
+            const total = data.total || 0;
+
+            const maleRes = await apiCall("/api/profiles?gender=male&limit=1");
+            const maleData = await maleRes.json();
+            const males = maleData.total || 0;
+
+            const females = total - males;
+
+            document.getElementById("metrics").innerHTML = `
+                <div class="card">
+                    <div class="number">${total}</div>
+                    <div class="label">Total Profiles</div>
+                </div>
+                <div class="card">
+                    <div class="number">${males}</div>
+                    <div class="label">Male</div>
+                </div>
+                <div class="card">
+                    <div class="number">${females}</div>
+                    <div class="label">Female</div>
+                </div>
+            `;
+        }
+
+        loadDashboard();
+    </script>
+</body>
+
+</html>

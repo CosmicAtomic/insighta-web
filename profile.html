@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Detail | Insighta Labs+</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav>
+        <a class="logo" href="dashboard.html">Insighta Labs+</a>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="profiles.html">Profiles</a>
+            <a href="search.html">Search</a>
+            <a href="account.html">Account</a>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="page">
+        <h2>Profile Detail</h2>
+        <div id="profile-detail">
+            <div class="loading">Loading profile...</div>
+        </div>
+        <br>
+        <a href="profiles.html">← Back to profiles</a>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        requireLogin();
+
+        async function loadProfile() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id");
+
+            if (!id) {
+                document.getElementById("profile-detail").innerHTML = "<p>No profile ID provided.</p>";
+                return;
+            }
+
+            const res = await apiCall("/api/profiles/" + id);
+            if (!res) return;
+
+            if (res.status === 404) {
+                document.getElementById("profile-detail").innerHTML = "<p>Profile not found.</p>";
+                return;
+            }
+
+            const data = await res.json();
+            const p = data.data;
+
+            document.getElementById("profile-detail").innerHTML = `
+                <div class="profile-detail">
+                    <div class="field"><span class="field-label">ID</span><span class="field-value">${p.id}</span></div>
+                    <div class="field"><span class="field-label">Name</span><span class="field-value">${p.name}</span></div>
+                    <div class="field"><span class="field-label">Gender</span><span class="field-value">${p.gender} (${(p.gender_probability * 100).toFixed(0)}% confidence)</span></div>
+                    <div class="field"><span class="field-label">Age</span><span class="field-value">${p.age}</span></div>
+                    <div class="field"><span class="field-label">Age Group</span><span class="field-value">${p.age_group}</span></div>
+                    <div class="field"><span class="field-label">Country</span><span class="field-value">${p.country_name || p.country_id} (${(p.country_probability * 100).toFixed(0)}% confidence)</span></div>
+                    <div class="field"><span class="field-label">Created</span><span class="field-value">${p.created_at}</span></div>
+                </div>
+            `;
+        }
+
+        loadProfile();
+    </script>
+</body>
+
+</html>

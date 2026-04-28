@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account | Insighta Labs+</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav>
+        <a class="logo" href="dashboard.html">Insighta Labs+</a>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="profiles.html">Profiles</a>
+            <a href="search.html">Search</a>
+            <a href="account.html">Account</a>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="page">
+        <h2>Account</h2>
+        <div id="account-info">
+            <div class="loading">Loading account info...</div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        requireLogin();
+
+        async function loadAccount() {
+            const res = await apiCall("/auth/me");
+            if (!res) return;
+
+            const data = await res.json();
+            const u = data.data;
+
+            document.getElementById("account-info").innerHTML = `
+                <div class="account-card">
+                    <img src="${u.avatar_url || ''}" alt="Avatar">
+                    <div>
+                        <h3>@${u.username}</h3>
+                        <p>Email: ${u.email || 'Not provided'}</p>
+                        <p>Role: ${u.role}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        loadAccount();
+    </script>
+</body>
+
+</html>

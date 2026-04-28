@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profiles | Insighta Labs+</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav>
+        <a class="logo" href="dashboard.html">Insighta Labs+</a>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="profiles.html">Profiles</a>
+            <a href="search.html">Search</a>
+            <a href="account.html">Account</a>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="page">
+        <h2>Profiles</h2>
+
+        <div class="filters">
+            <label>Gender
+                <select id="gender">
+                    <option value="">All</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </label>
+            <label>Age Group
+                <select id="age_group">
+                    <option value="">All</option>
+                    <option value="child">Child</option>
+                    <option value="teenager">Teenager</option>
+                    <option value="adult">Adult</option>
+                    <option value="senior">Senior</option>
+                </select>
+            </label>
+            <label>Country
+                <input type="text" id="country_id" placeholder="e.g. NG" maxlength="2">
+            </label>
+            <label>Sort By
+                <select id="sort_by">
+                    <option value="">Default</option>
+                    <option value="age">Age</option>
+                    <option value="created_at">Created</option>
+                    <option value="gender_probability">Gender Prob.</option>
+                </select>
+            </label>
+            <label>Order
+                <select id="order">
+                    <option value="asc">Asc</option>
+                    <option value="desc">Desc</option>
+                </select>
+            </label>
+            <button onclick="currentPage=1; loadProfiles()">Apply</button>
+        </div>
+
+        <div id="profiles-table">
+            <div class="loading">Loading profiles...</div>
+        </div>
+
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        requireLogin();
+        let currentPage = 1;
+        const limit = 10;
+
+        async function loadProfiles() {
+            let params = `?page=${currentPage}&limit=${limit}`;
+
+            const gender = document.getElementById("gender").value;
+            const ageGroup = document.getElementById("age_group").value;
+            const country = document.getElementById("country_id").value;
+            const sortBy = document.getElementById("sort_by").value;
+            const order = document.getElementById("order").value;
+
+            if (gender) params += `&gender=${gender}`;
+            if (ageGroup) params += `&age_group=${ageGroup}`;
+            if (country) params += `&country_id=${country}`;
+            if (sortBy) params += `&sort_by=${sortBy}`;
+            if (order) params += `&order=${order}`;
+
+            const res = await apiCall("/api/profiles" + params);
+            if (!res) return;
+            const data = await res.json();
+
+            let html = `<table>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Age Group</th>
+                    <th>Country</th>
+                    <th>Details</th>
+                </tr>`;
+
+            for (const p of data.data) {
+                html += `<tr>
+                    <td>${p.name}</td>
+                    <td>${p.gender}</td>
+                    <td>${p.age}</td>
+                    <td>${p.age_group}</td>
+                    <td>${p.country_name || p.country_id}</td>
+                    <td><a href="profile.html?id=${p.id}">View</a></td>
+                </tr>`;
+            }
+            html += `</table>`;
+            document.getElementById("profiles-table").innerHTML = html;
+
+            const totalPages = data.total_pages || 1;
+            document.getElementById("pagination").innerHTML = `
+                <button ${currentPage <= 1 ? 'disabled' : ''} onclick="currentPage--; loadProfiles()">Previous</button>
+                <span>Page ${currentPage} of ${totalPages} (${data.total} results)</span>
+                <button ${currentPage >= totalPages ? 'disabled' : ''} onclick="currentPage++; loadProfiles()">Next</button>
+            `;
+        }
+
+        loadProfiles();
+    </script>
+</body>
+
+</html>

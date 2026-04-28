@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search | Insighta Labs+</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav>
+        <a class="logo" href="dashboard.html">Insighta Labs+</a>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="profiles.html">Profiles</a>
+            <a href="search.html">Search</a>
+            <a href="account.html">Account</a>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="page">
+        <h2>Natural Language Search</h2>
+
+        <div class="search-bar">
+            <input type="text" id="query" placeholder='Try "young males from nigeria" or "females above 30"'>
+            <button onclick="currentPage=1; doSearch()">Search</button>
+        </div>
+
+        <div id="search-results"></div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        requireLogin();
+        let currentPage = 1;
+        const limit = 10;
+
+        document.getElementById("query").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                currentPage = 1;
+                doSearch();
+            }
+        });
+
+        async function doSearch() {
+            const query = document.getElementById("query").value.trim();
+            if (!query) return;
+
+            document.getElementById("search-results").innerHTML = '<div class="loading">Searching...</div>';
+            document.getElementById("pagination").innerHTML = "";
+
+            const res = await apiCall(`/api/profiles/search?q=${encodeURIComponent(query)}&page=${currentPage}&limit=${limit}`);
+            if (!res) return;
+
+            const data = await res.json();
+
+            if (data.status === "error") {
+                document.getElementById("search-results").innerHTML = `<p>${data.message}</p>`;
+                return;
+            }
+
+            if (!data.data || data.data.length === 0) {
+                document.getElementById("search-results").innerHTML = "<p>No results found.</p>";
+                return;
+            }
+
+            let html = `<table>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Age Group</th>
+                    <th>Country</th>
+                    <th>Details</th>
+                </tr>`;
+
+            for (const p of data.data) {
+                html += `<tr>
+                    <td>${p.name}</td>
+                    <td>${p.gender}</td>
+                    <td>${p.age}</td>
+                    <td>${p.age_group}</td>
+                    <td>${p.country_name || p.country_id}</td>
+                    <td><a href="profile.html?id=${p.id}">View</a></td>
+                </tr>`;
+            }
+            html += `</table>`;
+            document.getElementById("search-results").innerHTML = html;
+
+            const totalPages = data.total_pages || 1;
+            document.getElementById("pagination").innerHTML = `
+                <button ${currentPage <= 1 ? 'disabled' : ''} onclick="currentPage--; doSearch()">Previous</button>
+                <span>Page ${currentPage} of ${totalPages} (${data.total} results)</span>
+                <button ${currentPage >= totalPages ? 'disabled' : ''} onclick="currentPage++; doSearch()">Next</button>
+            `;
+        }
+    </script>
+</body>
+
+</html>
