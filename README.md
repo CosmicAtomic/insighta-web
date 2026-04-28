@@ -94,7 +94,7 @@ Update this value if you are running the backend locally or on a different host.
 The GitHub OAuth link in [index.html](index.html) includes a hardcoded redirect URI:
 
 ```html
-https://name-profiler-production.up.railway.app/auth/github?redirect_to=http://localhost:5500/dashboard.html
+https://name-profiler-production.up.railway.app/auth/github?redirect_to=https://insighta-lab.netlify.app/dashboard.html
 ```
 
 Update the `redirect_to` parameter to match your deployment URL before hosting in production.
