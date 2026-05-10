@@ -52,7 +52,7 @@ insighta-web/
 
 - A modern web browser
 - A static file server (e.g. [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) for VS Code, or `npx serve`)
-- Access to the Insighta backend (see [Backend](#backend))
+- Access to the Insighta backend (see [Backend](https://github.com/CosmicAtomic/insighta-platform))
 
 ### Running Locally
 
