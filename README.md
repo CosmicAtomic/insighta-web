@@ -22,7 +22,7 @@ A lightweight web frontend for the **Insighta Demographic Intelligence Platform*
 | Frontend | Vanilla HTML5, CSS3, JavaScript (no framework) |
 | Auth | GitHub OAuth 2.0 via backend redirect |
 | Token storage | `localStorage` (access + refresh tokens) |
-| Backend API | REST — hosted on Railway |
+| Backend API | REST — hosted on Render |
 | Deployment | Static files (any static host) |
 
 ---
@@ -84,7 +84,7 @@ insighta-web/
 The backend base URL is defined at the top of [js/api.js](js/api.js):
 
 ```js
-const BACKEND_URL = "https://name-profiler-production.up.railway.app";
+const BACKEND_URL = "https://insighta-gfrf.onrender.com";
 ```
 
 Update this value if you are running the backend locally or on a different host.
@@ -94,7 +94,7 @@ Update this value if you are running the backend locally or on a different host.
 The GitHub OAuth link in [index.html](index.html) includes a hardcoded redirect URI:
 
 ```html
-https://name-profiler-production.up.railway.app/auth/github?redirect_to=https://insighta-lab.netlify.app/dashboard.html
+https://insighta-gfrf.onrender.com/auth/github?redirect_to=https://insighta-lab.netlify.app/dashboard.html
 ```
 
 Update the `redirect_to` parameter to match your deployment URL before hosting in production.
@@ -117,9 +117,9 @@ Update the `redirect_to` parameter to match your deployment URL before hosting i
 
 ## Backend
 
-The backend API is separately maintained and deployed on [Railway](https://railway.app).
+The backend API is separately maintained and deployed on [Render](https://render.com).
 
-**Base URL:** `https://name-profiler-production.up.railway.app`
+**Base URL:** `https://insighta-gfrf.onrender.com`
 
 | Endpoint | Description |
 |----------|-------------|

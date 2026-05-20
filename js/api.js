@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://name-profiler-production.up.railway.app";
+const BACKEND_URL = "https://insighta-gfrf.onrender.com";
 
 async function apiCall(path, options = {}) {
     const headers = {
