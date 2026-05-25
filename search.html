@@ -82,12 +82,13 @@
                     <th>Details</th>
                 </tr>`;
 
+            const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
             for (const p of data.data) {
                 html += `<tr>
                     <td>${p.name}</td>
-                    <td>${p.gender}</td>
+                    <td>${cap(p.gender)}</td>
                     <td>${p.age}</td>
-                    <td>${p.age_group}</td>
+                    <td>${cap(p.age_group)}</td>
                     <td>${p.country_name || p.country_id}</td>
                     <td><a href="profile.html?id=${p.id}">View</a></td>
                 </tr>`;

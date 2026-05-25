@@ -57,15 +57,19 @@
             const data = await res.json();
             const p = data.data;
 
+            const capitalize = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
+            const formatDate = s => s ? new Date(s).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+
+            document.title = `${p.name} | Insighta Labs+`;
+
             document.getElementById("profile-detail").innerHTML = `
                 <div class="profile-detail">
-                    <div class="field"><span class="field-label">ID</span><span class="field-value">${p.id}</span></div>
                     <div class="field"><span class="field-label">Name</span><span class="field-value">${p.name}</span></div>
-                    <div class="field"><span class="field-label">Gender</span><span class="field-value">${p.gender} (${(p.gender_probability * 100).toFixed(0)}% confidence)</span></div>
+                    <div class="field"><span class="field-label">Gender</span><span class="field-value">${capitalize(p.gender)} (${(p.gender_probability * 100).toFixed(0)}% confidence)</span></div>
                     <div class="field"><span class="field-label">Age</span><span class="field-value">${p.age}</span></div>
-                    <div class="field"><span class="field-label">Age Group</span><span class="field-value">${p.age_group}</span></div>
+                    <div class="field"><span class="field-label">Age Group</span><span class="field-value">${capitalize(p.age_group)}</span></div>
                     <div class="field"><span class="field-label">Country</span><span class="field-value">${p.country_name || p.country_id} (${(p.country_probability * 100).toFixed(0)}% confidence)</span></div>
-                    <div class="field"><span class="field-label">Created</span><span class="field-value">${p.created_at}</span></div>
+                    <div class="field"><span class="field-label">Created</span><span class="field-value">${formatDate(p.created_at)}</span></div>
                 </div>
             `;
         }

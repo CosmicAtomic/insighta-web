@@ -42,6 +42,7 @@
 
             const data = await res.json();
             const u = data.data;
+            const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
 
             document.getElementById("account-info").innerHTML = `
                 <div class="account-card">
@@ -49,7 +50,7 @@
                     <div>
                         <h3>@${u.username}</h3>
                         <p>Email: ${u.email || 'Not provided'}</p>
-                        <p>Role: ${u.role}</p>
+                        <p>Role: ${cap(u.role)}</p>
                     </div>
                 </div>
             `;

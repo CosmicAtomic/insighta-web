@@ -182,6 +182,12 @@ body {
     fill: #0f172a;
 }
 
+.github-con {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+}
+
 .img-container img{
     height: 300px;
     width: 500px;
@@ -193,7 +199,6 @@ body {
     max-width: 1000px;
     margin: 54px auto;
     padding: 0 16px;
-    font-weight: 800;
 }
 
 .page h2 {
