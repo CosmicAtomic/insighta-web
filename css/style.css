@@ -234,7 +234,7 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
-    background: var(--text-heading);
+    background: white;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -244,12 +244,12 @@ th,
 td {
     padding: 10px 14px;
     text-align: left;
-    border-bottom: 1px solid var(--text-paragraph);
+    border-bottom: 1px solid #eee;
     font-size: 14px;
 }
 
 th {
-    background: var(--dark-bg);
+    background: #1a1a2e;
     color: white;
     font-weight: 500;
 }
