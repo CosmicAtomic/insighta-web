@@ -249,7 +249,7 @@ td {
 }
 
 th {
-    background: var(--dark-bg);
+    background: #1a1a2e;
     color: white;
     font-weight: 500;
 }
