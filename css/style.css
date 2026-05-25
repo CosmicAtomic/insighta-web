@@ -18,47 +18,8 @@ body {
 .landing-body{
     background-color: var(--dark-bg);
 }
+
 /* Navigation */
-/* nav {
-    background-color: var(--dark-bg);
-    padding: 20px;
-    display: flex;
-    justify-content:space-around;
-    align-items: center;
-}
-
-nav .logo {
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-nav .nav-links {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-}
-
-nav .nav-links a {
-    color: #ccc;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-nav .nav-links a:hover {
-    color: white;
-}
-
-nav .nav-links button {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 6px 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 13px;
-} */
 
 .navigation-sec{
     background-color: var(--dark-bg);
@@ -101,11 +62,15 @@ nav .nav-links button {
 
 /* Login Page */
 .hero-section{
-    margin: 100px;
+    margin: 60px 100px 0 100px;
+    max-height: 100vh;
+}
+
+.hero-content{
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 100px;
-    max-height: 100vh;
 }
 
 #logo-1{
@@ -121,7 +86,7 @@ nav .nav-links button {
 }
 
 .login-container h1 {
-    font-size: 3.5rem;
+    font-size: 3.0rem;
     font-weight: 800;
     letter-spacing: -1.5px;
     margin: 20px 0 20px 0;
@@ -130,7 +95,7 @@ nav .nav-links button {
 }
 
 .login-container p {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     font-size: 1.1rem;
     color: var(--text-paragraph);
     line-height: 1.6;
@@ -161,6 +126,7 @@ nav .nav-links button {
     background:red;
     transform: translateY(-2px);
 }
+
 
 
 .github-btn {
@@ -268,7 +234,7 @@ nav .nav-links button {
 table {
     width: 100%;
     border-collapse: collapse;
-    background: white;
+    background: var(--text-heading);
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -278,12 +244,12 @@ th,
 td {
     padding: 10px 14px;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--text-paragraph);
     font-size: 14px;
 }
 
 th {
-    background: #1a1a2e;
+    background: var(--dark-bg);
     color: white;
     font-weight: 500;
 }
@@ -441,4 +407,36 @@ td a {
     text-align: center;
     padding: 40px;
     color: #888;
+}
+
+/*Resonsive design */
+
+@media (max-width: 768px) {
+    .hero-section{
+        display: flex;
+        flex-direction: column;
+        margin: 60px 30px 0; 
+        gap: 40px;
+    }
+    .hero-content{
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+    }
+    .login-container{
+        width: auto;
+    }
+    .login-container h1{
+        font-size: 2.0rem;
+        margin: 15px 0 15px 0 ;
+    }
+    .login-container p{
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+    .img-container img{
+        width: auto;
+        max-width: 300px;
+        max-height: 250px;
+    }
 }
