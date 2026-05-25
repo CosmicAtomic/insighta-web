@@ -9,23 +9,25 @@
 </head>
 
 <body>
-    <nav>
-        <a class="logo" href="dashboard.html">Insighta Labs+</a>
-        <div class="nav-links">
-            <a href="dashboard.html">Dashboard</a>
-            <a href="profiles.html">Profiles</a>
-            <a href="search.html">Search</a>
-            <a href="account.html">Account</a>
-            <button onclick="logout()">Logout</button>
-        </div>
-    </nav>
+    <div class="navigation-sec">
+        <a href="dashboard.html" class= "logo-2">Insighta Labs+</a>
+        <nav class="navigation">
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="profiles.html">profiles</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="account.html">Account</a></li>
+            </ul>
+        </nav>
+        <button onclick="logout()" class="logout">Logout</button>
+    </div>
 
     <div class="page">
         <h2>Natural Language Search</h2>
 
         <div class="search-bar">
             <input type="text" id="query" placeholder='Try "young males from nigeria" or "females above 30"'>
-            <button onclick="currentPage=1; doSearch()">Search</button>
+            <button onclick="currentPage=1; doSearch()" class="search">Search</button>
         </div>
 
         <div id="search-results"></div>
