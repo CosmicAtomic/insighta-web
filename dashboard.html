@@ -11,21 +11,40 @@
 <body>
     <div class="navigation-sec">
         <a href="dashboard.html" class="logo-2">Insighta Labs+</a>
-        <nav class="navigation">
-            <ul class="nav-links">
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="profiles.html">Profiles</a></li>
-                <li><a href="search.html">Search</a></li>
-                <li><a href="account.html">Account</a></li>
-            </ul>
-        </nav>
-        <button onclick="logout()" class="logout">Logout</button>
+        <div class="nav-right">
+            <nav class="navigation">
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="profiles.html">Profiles</a></li>
+                    <li><a href="search.html">Search</a></li>
+                    <li><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+            <button type="button" onclick="logout()" class="logout">Logout</button>
+        </div>
     </div>
 
     <div class="page">
-        <h2>Dashboard</h2>
+        <div class="welcome">
+            <h2 id="welcome-heading">Welcome back</h2>
+            <p>Here's what's in the platform today.</p>
+        </div>
+
         <div class="cards" id="metrics">
             <div class="loading">Loading metrics...</div>
+        </div>
+
+        <div class="dashboard-bottom">
+            <div class="recent-section">
+                <p class="section-title">Recent Profiles</p>
+                <div id="recent-profiles"><div class="loading">Loading...</div></div>
+            </div>
+            <div class="quick-actions">
+                <p class="section-title">Quick Actions</p>
+                <a href="profiles.html">Browse all Profiles <span>→</span></a>
+                <a href="search.html">Natural Language Search <span>→</span></a>
+                <a href="account.html">View Account <span>→</span></a>
+            </div>
         </div>
     </div>
 
@@ -35,32 +54,69 @@
         getTokensFromURL();
         requireLogin();
 
+        const username = localStorage.getItem("username");
+        if (username) {
+            document.getElementById("welcome-heading").textContent = `Welcome back, @${username}`;
+        }
+
         async function loadDashboard() {
-            const res = await apiCall("/api/profiles?limit=1");
-            if (!res) return;
-            const data = await res.json();
-            const total = data.total || 0;
+            const [totalRes, maleRes, recentRes] = await Promise.all([
+                apiCall("/api/profiles?limit=1"),
+                apiCall("/api/profiles?gender=male&limit=1"),
+                apiCall("/api/profiles?limit=5&sort_by=created_at&order=desc")
+            ]);
 
-            const maleRes = await apiCall("/api/profiles?gender=male&limit=1");
+            if (!totalRes || !maleRes || !recentRes) return;
+
+            const totalData = await totalRes.json();
             const maleData = await maleRes.json();
-            const males = maleData.total || 0;
+            const recentData = await recentRes.json();
 
+            const total = totalData.total || 0;
+            const males = maleData.total || 0;
             const females = total - males;
 
             document.getElementById("metrics").innerHTML = `
-                <div class="card">
-                    <div class="number">${total}</div>
+                <div class="card card-blue">
+                    <div class="card-icon">◈</div>
+                    <div class="number">${total.toLocaleString()}</div>
                     <div class="label">Total Profiles</div>
                 </div>
-                <div class="card">
-                    <div class="number">${males}</div>
+                <div class="card card-indigo">
+                    <div class="card-icon">◈</div>
+                    <div class="number">${males.toLocaleString()}</div>
                     <div class="label">Male</div>
                 </div>
-                <div class="card">
-                    <div class="number">${females}</div>
+                <div class="card card-pink">
+                    <div class="card-icon">◈</div>
+                    <div class="number">${females.toLocaleString()}</div>
                     <div class="label">Female</div>
                 </div>
             `;
+
+            const profiles = recentData.data || [];
+            if (profiles.length === 0) {
+                document.getElementById("recent-profiles").innerHTML = "<p>No profiles yet.</p>";
+                return;
+            }
+
+            let html = `<table>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Country</th>
+                    <th></th>
+                </tr>`;
+            for (const p of profiles) {
+                html += `<tr>
+                    <td>${p.name}</td>
+                    <td>${p.gender}</td>
+                    <td>${p.country_name || p.country_id}</td>
+                    <td><a href="profile.html?id=${p.id}">View</a></td>
+                </tr>`;
+            }
+            html += `</table>`;
+            document.getElementById("recent-profiles").innerHTML = html;
         }
 
         loadDashboard();

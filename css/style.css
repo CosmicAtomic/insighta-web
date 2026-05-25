@@ -29,6 +29,12 @@ body {
     align-items: center;
 }
 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2.4em;
+}
+
 .nav-links{
     display: flex;
     justify-content: center;
@@ -195,6 +201,71 @@ body {
     color: var(--dark-bg);
 }
 
+/* Welcome */
+.welcome {
+    margin-bottom: 24px;
+}
+
+.welcome h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--dark-bg);
+}
+
+.welcome p {
+    color: #888;
+    font-size: 14px;
+    margin-top: 4px;
+    font-weight: 400;
+}
+
+/* Dashboard bottom grid */
+.dashboard-bottom {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+    align-items: start;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+/* Quick Actions */
+.quick-actions {
+    background: white;
+    padding: 20px 24px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.quick-actions a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.15s;
+}
+
+.quick-actions a:last-child {
+    border-bottom: none;
+}
+
+.quick-actions a:hover {
+    color: #3b82f6;
+}
+
 /* Cards */
 .cards {
     display: grid;
@@ -210,6 +281,20 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+
+.card-blue  { border-top: 3px solid #3b82f6; }
+.card-indigo { border-top: 3px solid #6366f1; }
+.card-pink   { border-top: 3px solid #ec4899; }
+
+.card-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+    opacity: 0.35;
+}
+
+.card-blue  .card-icon { color: #3b82f6; }
+.card-indigo .card-icon { color: #6366f1; }
+.card-pink  .card-icon { color: #ec4899; }
 
 .card .number {
     font-size: 32px;
@@ -436,5 +521,9 @@ td a {
         width: auto;
         max-width: 300px;
         max-height: 250px;
+    }
+
+    .dashboard-bottom {
+        grid-template-columns: 1fr;
     }
 }
