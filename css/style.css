@@ -73,13 +73,6 @@ body {
     gap: 100px;
 }
 
-#logo-1{
-    margin: 20px;
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--text-heading);
-    letter-spacing: -0.5px;
-}
 
 .login-container {
     width:600px;
@@ -400,6 +393,11 @@ td a {
     width: 80px;
     height: 80px;
     border-radius: 50%;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 16px;
 }
 
 /* Loading */

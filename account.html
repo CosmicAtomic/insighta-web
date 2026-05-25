@@ -10,11 +10,11 @@
 
 <body>
     <div class="navigation-sec">
-        <a href="dashboard.html" class= "logo-2">Insighta Labs+</a>
+        <a href="dashboard.html" class="logo-2">Insighta Labs+</a>
         <nav class="navigation">
             <ul class="nav-links">
                 <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="profiles.html">profiles</a></li>
+                <li><a href="profiles.html">Profiles</a></li>
                 <li><a href="search.html">Search</a></li>
                 <li><a href="account.html">Account</a></li>
             </ul>
@@ -43,7 +43,7 @@
 
             document.getElementById("account-info").innerHTML = `
                 <div class="account-card">
-                    <img src="${u.avatar_url || ''}" alt="Avatar">
+                    ${u.avatar_url ? `<img src="${u.avatar_url}" alt="Avatar">` : ''}
                     <div>
                         <h3>@${u.username}</h3>
                         <p>Email: ${u.email || 'Not provided'}</p>
