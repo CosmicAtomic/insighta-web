@@ -2,6 +2,8 @@
 
 A lightweight web frontend for the **Insighta Demographic Intelligence Platform** — browse, filter, and search demographic profiles powered by a name-analysis API.
 
+**Live app:** [insighta-lab.netlify.app](https://insighta-lab.netlify.app)
+
 ---
 
 ## Features
@@ -23,7 +25,7 @@ A lightweight web frontend for the **Insighta Demographic Intelligence Platform*
 | Auth | GitHub OAuth 2.0 via backend redirect |
 | Token storage | `localStorage` (access + refresh tokens) |
 | Backend API | REST — hosted on Render |
-| Deployment | Static files (any static host) |
+| Deployment | Netlify — [insighta-lab.netlify.app](https://insighta-lab.netlify.app) |
 
 ---
 
@@ -31,7 +33,7 @@ A lightweight web frontend for the **Insighta Demographic Intelligence Platform*
 
 ```
 insighta-web/
-├── index.html          # Login / landing page
+├── index.html          # Landing page with hero section and GitHub login
 ├── dashboard.html      # Metrics overview
 ├── profiles.html       # Paginated & filterable profile list
 ├── profile.html        # Individual profile detail
@@ -39,6 +41,8 @@ insighta-web/
 ├── account.html        # Logged-in user account info
 ├── css/
 │   └── style.css       # Shared stylesheet
+├── imgs/
+│   └── Screenshot (20).png  # Hero section screenshot
 └── js/
     ├── auth.js         # Token management, login guard, logout
     └── api.js          # Authenticated fetch wrapper with auto-refresh
@@ -58,7 +62,7 @@ insighta-web/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/insighta-web.git
+   git clone https://github.com/CosmicAtomic/insighta-web.git
    cd insighta-web
    ```
 
