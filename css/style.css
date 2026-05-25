@@ -27,7 +27,32 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
+
+/* Hamburger */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-heading);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 .nav-right {
     display: flex;
@@ -497,38 +522,99 @@ td a {
     color: #888;
 }
 
-/*Resonsive design */
+/* Responsive design */
 
 @media (max-width: 768px) {
-    .hero-section{
+
+    /* Nav */
+    .navigation-sec {
+        padding: 16px 24px;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-right {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--dark-bg);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px 24px;
+        gap: 16px;
+        z-index: 100;
+    }
+
+    .nav-right.open {
+        display: flex;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    /* Page */
+    .page {
+        margin: 24px auto;
+    }
+
+    /* Tables */
+    #profiles-table,
+    #search-results,
+    #recent-profiles {
+        overflow-x: auto;
+    }
+
+    /* Profile detail fields */
+    .profile-detail .field {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .profile-detail .field-label {
+        width: auto;
+    }
+
+    /* Dashboard */
+    .dashboard-bottom {
+        grid-template-columns: 1fr;
+    }
+
+    /* Landing page */
+    .hero-section {
         display: flex;
         flex-direction: column;
-        margin: 60px 30px 0; 
+        margin: 60px 30px 0;
         gap: 40px;
     }
-    .hero-content{
-        display: flex;
+
+    .hero-content {
         flex-direction: column;
         gap: 50px;
     }
-    .login-container{
+
+    .login-container {
         width: auto;
     }
-    .login-container h1{
+
+    .login-container h1 {
         font-size: 2.0rem;
-        margin: 15px 0 15px 0 ;
+        margin: 15px 0;
     }
-    .login-container p{
+
+    .login-container p {
         font-size: 0.9rem;
         margin-bottom: 0;
     }
-    .img-container img{
+
+    .img-container img {
         width: auto;
         max-width: 300px;
         max-height: 250px;
-    }
-
-    .dashboard-bottom {
-        grid-template-columns: 1fr;
     }
 }
