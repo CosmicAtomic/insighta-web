@@ -28,11 +28,11 @@
     </div>
 
     <div class="page">
-        <h2>Profile Detail</h2>
+        <h2 id="profile-heading">Profile Detail</h2>
         <div id="profile-detail">
             <div class="loading">Loading profile...</div>
         </div>
-        <a href="profiles.html" class="back-link">← Back to Profiles</a>
+        <a href="profiles.html" class="back-link hidden" id="back-link">← Back to Profiles</a>
     </div>
 
     <script src="js/auth.js"></script>
@@ -45,7 +45,8 @@
             const id = params.get("id");
 
             if (!id) {
-                document.getElementById("profile-detail").innerHTML = "<p>No profile ID provided.</p>";
+                document.getElementById("profile-detail").innerHTML = '<p class="empty-state">No profile ID provided.</p>';
+                document.getElementById("back-link").classList.remove("hidden");
                 return;
             }
 
@@ -53,7 +54,8 @@
             if (!res) return;
 
             if (res.status === 404) {
-                document.getElementById("profile-detail").innerHTML = "<p>Profile not found.</p>";
+                document.getElementById("profile-detail").innerHTML = '<p class="empty-state">Profile not found.</p>';
+                document.getElementById("back-link").classList.remove("hidden");
                 return;
             }
 
@@ -64,6 +66,8 @@
             const formatDate = s => s ? new Date(s).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
 
             document.title = `${p.name} | Insighta Labs+`;
+            document.getElementById("profile-heading").textContent = p.name;
+            document.getElementById("back-link").classList.remove("hidden");
 
             document.getElementById("profile-detail").innerHTML = `
                 <div class="profile-detail">

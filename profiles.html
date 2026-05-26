@@ -82,6 +82,9 @@
         const limit = 10;
 
         async function loadProfiles() {
+            document.getElementById("profiles-table").innerHTML = '<div class="loading">Loading profiles...</div>';
+            document.getElementById("pagination").innerHTML = "";
+
             let params = `?page=${currentPage}&limit=${limit}`;
 
             const gender = document.getElementById("gender").value;
@@ -99,6 +102,11 @@
             const res = await apiCall("/api/profiles" + params);
             if (!res) return;
             const data = await res.json();
+
+            if (!data.data || data.data.length === 0) {
+                document.getElementById("profiles-table").innerHTML = '<p class="empty-state">No profiles match your filters.</p>';
+                return;
+            }
 
             let html = `<table>
                 <tr>
@@ -126,9 +134,9 @@
 
             const totalPages = data.total_pages || 1;
             document.getElementById("pagination").innerHTML = `
-                <button ${currentPage <= 1 ? 'disabled' : ''} onclick="currentPage--; loadProfiles()">Previous</button>
+                <button type="button" ${currentPage <= 1 ? 'disabled' : ''} onclick="currentPage--; loadProfiles()">Previous</button>
                 <span>Page ${currentPage} of ${totalPages} (${data.total} results)</span>
-                <button ${currentPage >= totalPages ? 'disabled' : ''} onclick="currentPage++; loadProfiles()">Next</button>
+                <button type="button" ${currentPage >= totalPages ? 'disabled' : ''} onclick="currentPage++; loadProfiles()">Next</button>
             `;
         }
 

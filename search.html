@@ -29,10 +29,19 @@
 
     <div class="page">
         <h2>Natural Language Search</h2>
+        <p class="search-hint">Describe who you're looking for in plain English.</p>
 
         <div class="search-bar">
-            <input type="text" id="query" placeholder='Try "young males from nigeria" or "females above 30"'>
+            <input type="text" id="query" placeholder='e.g. "young males from Nigeria"'>
             <button type="button" onclick="currentPage=1; doSearch()" class="search">Search</button>
+        </div>
+
+        <div class="search-chips">
+            <span>Try:</span>
+            <button type="button" class="chip" onclick="setQuery('young males from Nigeria')">Young males from Nigeria</button>
+            <button type="button" class="chip" onclick="setQuery('females above 30')">Females above 30</button>
+            <button type="button" class="chip" onclick="setQuery('senior adults from the US')">Senior adults from the US</button>
+            <button type="button" class="chip" onclick="setQuery('teenagers from the UK')">Teenagers from the UK</button>
         </div>
 
         <div id="search-results"></div>
@@ -45,6 +54,12 @@
         requireLogin();
         let currentPage = 1;
         const limit = 10;
+
+        function setQuery(text) {
+            document.getElementById("query").value = text;
+            currentPage = 1;
+            doSearch();
+        }
 
         document.getElementById("query").addEventListener("keydown", function (e) {
             if (e.key === "Enter") {
@@ -66,12 +81,12 @@
             const data = await res.json();
 
             if (data.status === "error") {
-                document.getElementById("search-results").innerHTML = `<p>${data.message}</p>`;
+                document.getElementById("search-results").innerHTML = `<p class="empty-state">${data.message}</p>`;
                 return;
             }
 
             if (!data.data || data.data.length === 0) {
-                document.getElementById("search-results").innerHTML = "<p>No results found.</p>";
+                document.getElementById("search-results").innerHTML = '<p class="empty-state">No results found for that query.</p>';
                 return;
             }
 
@@ -101,9 +116,9 @@
 
             const totalPages = data.total_pages || 1;
             document.getElementById("pagination").innerHTML = `
-                <button ${currentPage <= 1 ? 'disabled' : ''} onclick="currentPage--; doSearch()">Previous</button>
+                <button type="button" ${currentPage <= 1 ? 'disabled' : ''} onclick="currentPage--; doSearch()">Previous</button>
                 <span>Page ${currentPage} of ${totalPages} (${data.total} results)</span>
-                <button ${currentPage >= totalPages ? 'disabled' : ''} onclick="currentPage++; doSearch()">Next</button>
+                <button type="button" ${currentPage >= totalPages ? 'disabled' : ''} onclick="currentPage++; doSearch()">Next</button>
             `;
         }
     </script>
