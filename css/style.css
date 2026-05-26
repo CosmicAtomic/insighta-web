@@ -494,20 +494,114 @@ td a {
 }
 
 /* Account */
-.account-card {
+.account-profile {
     background: white;
-    padding: 24px;
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    display: flex;
-    gap: 20px;
-    align-items: center;
+    overflow: hidden;
+    max-width: 560px;
 }
 
-.account-card img {
-    width: 80px;
-    height: 80px;
+.account-header {
+    background: var(--dark-bg);
+    padding: 32px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.account-avatar {
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+}
+
+.account-avatar-placeholder {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #3b82f6;
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.account-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.account-username {
+    color: var(--text-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.account-role-badge {
+    display: inline-block;
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 3px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.account-fields {
+    padding: 8px 28px;
+}
+
+.account-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.account-field:last-child {
+    border-bottom: none;
+}
+
+.account-field-label {
+    color: #888;
+    font-weight: 500;
+}
+
+.account-field-value {
+    color: #333;
+    font-weight: 500;
+}
+
+.account-actions {
+    padding: 20px 28px;
+    border-top: 1px solid #eee;
+}
+
+.account-logout-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.account-logout-btn:hover {
+    background: #dc2626;
 }
 
 .back-link {
@@ -583,6 +677,23 @@ td a {
     /* Dashboard */
     .dashboard-bottom {
         grid-template-columns: 1fr;
+    }
+
+    /* Account */
+    .account-header {
+        padding: 24px 20px;
+    }
+
+    .account-field {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .account-fields,
+    .account-actions {
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     /* Landing page */

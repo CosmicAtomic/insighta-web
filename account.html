@@ -28,7 +28,6 @@
     </div>
 
     <div class="page">
-        <h2>Account</h2>
         <div id="account-info">
             <div class="loading">Loading account info...</div>
         </div>
@@ -48,12 +47,35 @@
             const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
 
             document.getElementById("account-info").innerHTML = `
-                <div class="account-card">
-                    ${u.avatar_url ? `<img src="${u.avatar_url}" alt="Avatar">` : ''}
-                    <div>
-                        <h3>@${u.username}</h3>
-                        <p>Email: ${u.email || 'Not provided'}</p>
-                        <p>Role: ${cap(u.role)}</p>
+                <div class="account-profile">
+                    <div class="account-header">
+                        ${u.avatar_url
+                            ? `<img src="${u.avatar_url}" alt="${u.username}'s avatar" class="account-avatar">`
+                            : `<div class="account-avatar-placeholder">${u.username.charAt(0).toUpperCase()}</div>`
+                        }
+                        <div class="account-header-info">
+                            <h2 class="account-username">@${u.username}</h2>
+                            <span class="account-role-badge">${cap(u.role)}</span>
+                        </div>
+                    </div>
+
+                    <div class="account-fields">
+                        <div class="account-field">
+                            <span class="account-field-label">Email</span>
+                            <span class="account-field-value">${u.email || 'Not provided'}</span>
+                        </div>
+                        <div class="account-field">
+                            <span class="account-field-label">Role</span>
+                            <span class="account-field-value">${cap(u.role)}</span>
+                        </div>
+                        <div class="account-field">
+                            <span class="account-field-label">Connected via</span>
+                            <span class="account-field-value">GitHub</span>
+                        </div>
+                    </div>
+
+                    <div class="account-actions">
+                        <button type="button" class="account-logout-btn" onclick="logout()">Logout</button>
                     </div>
                 </div>
             `;
