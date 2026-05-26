@@ -50,6 +50,12 @@
             <label>Country
                 <input type="text" id="country_id" placeholder="e.g. NG" maxlength="2" oninput="this.value = this.value.toUpperCase()">
             </label>
+            <label>Min Age
+                <input type="number" id="min_age" placeholder="e.g. 18" min="0" max="120">
+            </label>
+            <label>Max Age
+                <input type="number" id="max_age" placeholder="e.g. 40" min="0" max="120">
+            </label>
             <label>Sort By
                 <select id="sort_by">
                     <option value="">Default</option>
@@ -90,12 +96,16 @@
             const gender = document.getElementById("gender").value;
             const ageGroup = document.getElementById("age_group").value;
             const country = document.getElementById("country_id").value;
+            const minAge = document.getElementById("min_age").value;
+            const maxAge = document.getElementById("max_age").value;
             const sortBy = document.getElementById("sort_by").value;
             const order = document.getElementById("order").value;
 
             if (gender) params += `&gender=${gender}`;
             if (ageGroup) params += `&age_group=${ageGroup}`;
             if (country) params += `&country_id=${country}`;
+            if (minAge) params += `&min_age=${minAge}`;
+            if (maxAge) params += `&max_age=${maxAge}`;
             if (sortBy) params += `&sort_by=${sortBy}`;
             if (order) params += `&order=${order}`;
 

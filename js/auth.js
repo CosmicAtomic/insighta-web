@@ -25,7 +25,17 @@ function isLoggedIn() {
     return !!getAccessToken();
 }
 
-function logout() {
+async function logout() {
+    const refreshToken = localStorage.getItem("refresh_token");
+    if (refreshToken && typeof BACKEND_URL !== "undefined") {
+        try {
+            await fetch(BACKEND_URL + "/auth/logout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ refresh_token: refreshToken })
+            });
+        } catch {}
+    }
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("username");
