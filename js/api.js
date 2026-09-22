@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://insighta-gfrf.onrender.com";
+const BACKEND_URL = "http://127.0.0.1:8000";
 
 async function apiCall(path, options = {}) {
     const headers = {
